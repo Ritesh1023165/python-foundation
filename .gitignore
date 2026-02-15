@@ -1,1 +1,3 @@
-workspace.code-workspace
+python-foundation.code-workspace
+src/__pycache__
+data
