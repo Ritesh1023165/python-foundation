@@ -2,7 +2,7 @@ import requests
 import pandas as pd
 import matplotlib.pyplot as plt
 from utils import getPastDateFromDays
-from config import DATA_DIR
+from config import OUTPUT_DATA_DIR
 
 
 # Calculate dates
@@ -51,7 +51,7 @@ plt.xticks(rotation=45)
 plt.tight_layout()
 
 # Save the plot  
-plt.savefig(DATA_DIR/'weather_chart.png')
+plt.savefig(OUTPUT_DATA_DIR/'weather_chart.png')
 plt.show()
 
 # ----------------------------------------
@@ -59,5 +59,5 @@ plt.show()
 
 
 # Save to CSV
-df.to_csv(DATA_DIR/'Belgaum_weather.csv', index=False)
+df.to_csv(OUTPUT_DATA_DIR/'Belgaum_weather.csv', index=False)
 print("Data saved to data/Belgaum_weather.csv")
