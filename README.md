@@ -16,3 +16,6 @@ Features:
 - Feature engineering
 - Logging
 - Reusable pipeline class
+
+# main_async
+A service that asynchronously calls multiple external AI service (simulated) to enrich loan risk data.

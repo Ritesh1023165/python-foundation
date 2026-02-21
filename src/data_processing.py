@@ -1,8 +1,7 @@
 import pandas as pd
 import numpy as np
 import logging
-from config import INPUT_DATA_DIR
-from config import OUTPUT_DATA_DIR
+from config import (INPUT_DATA_DIR, OUTPUT_DATA_DIR)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
