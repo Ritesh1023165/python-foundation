@@ -14,4 +14,6 @@ class LoanResponse(BaseModel):
     loan_income_ratio: float
     risk_flag: str
     employment_score: float
+    fraud_probability: float
+    macro_risk_index: float
     recommendation: str

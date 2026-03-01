@@ -1,6 +1,5 @@
 import time
 import logging
-import uuid
 from fastapi import FastAPI, Request, Depends, HTTPException
 from fastapi.responses import JSONResponse
 from src.api.schemas import LoanRequest, LoanResponse
@@ -10,6 +9,9 @@ from src.service.logging_config import setup_logging
 from src.service.validator import LoanValidator
 from src.service.audit_service import AuditService
 from src.service.exceptions import ValidationError
+from src.service.orchestrator import RiskOrchestrator
+
+orchestrator = RiskOrchestrator()
 
 setup_logging()
 logger = logging.getLogger("loan-api")
@@ -35,12 +37,15 @@ async def evaluate_risk(
     engine: RiskEngine = Depends(get_risk_engine)
 ):
     try:
-        correlation_id = uuid.uuid1()
+       # correlation_id = uuid.uuid1()
         AuditService.log_request(request)
         LoanValidator.validate(request)
         result = engine.evaluate(request)
+        enriched_result = await orchestrator.enrich(applicant_id=1, base_result=result)
+        if enriched_result["fraud_probability"] > 0.7:
+            enriched_result["recommendation"] = "Manual Review Required"
         AuditService.log_response(result)
-        return result
+        return enriched_result
     except ValidationError as ve:
         raise HTTPException(status_code=400, detail=str(ve))
 
